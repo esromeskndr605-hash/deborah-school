@@ -1,3 +1,4 @@
+
 name: Build Deborah School APK
 
 on:
@@ -11,6 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -18,11 +25,11 @@ jobs:
 
       - name: Build APK
         run: |
-          flutter create . --platforms=android
-          flutter build apk --release
+          flutter create . --platforms=android --project-name=deborah_school
+          flutter build apk --debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: DeborahSchool-APK
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
